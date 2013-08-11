@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. $(dirname $0)/.env
+
+cd ${project_dir}
+grunt --no-color

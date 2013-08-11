@@ -1,0 +1,16 @@
+#!/bin/bash
+
+. $(dirname $0)/.env
+
+s3_bucket="gtdonejs"
+zip_files=$(ls ${dist_dir}/*.zip)
+
+for zip_file in ${zip_files}; do
+    filename=$(basename ${zip_file})
+    echo "Publishing ${filename}..."
+    s3cmd put --acl-public --guess-mime-type ${zip_file} s3://${s3_bucket}/${filename}
+    ret=$?
+    if [[ $ret != 0 ]]; then
+        exit $ret
+    fi
+done

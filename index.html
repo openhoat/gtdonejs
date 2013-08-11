@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html ng-app="gtdonejs" ng-init="init()" ng-cloak>
+<head>
+  <title>{{title}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="lib/bootstrap-3.0.0-rc1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/glyphicons/css/bootstrap-glyphicons.css">
+  <link rel="stylesheet" href="lib/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="lib/jquery-1.10.2/jquery-1.10.2.min.js"></script>
+  <script src="lib/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+  <script src="lib/bootstrap-3.0.0-rc1/js/bootstrap.min.js"></script>
+  <script src="lib/Respond-1.2.0/respond.min.js"></script>
+  <script src="lib/angular-1.0.7/angular.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+
+  <div id="header" class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <div id="navbar" class="nav-collapse collapse">
+        <a id="sidebarToggle" class="navbar-brand" href="#" title="Click to toggle sidebar"
+           ng-click="toggleSidebar($event)">
+          <i class="glyphicon"
+             ng-class="{'glyphicon-chevron-left':settings.sidebarEnabled,'glyphicon-chevron-right':!settings.sidebarEnabled}">
+          </i>
+        </a>
+        <ul class="nav navbar-nav">
+          <li><a href="#/new" title="Create a task"><i class="glyphicon glyphicon-plus"></i></a></li>
+          <li><a href="#/inbox" title="Tasks into inbox"><i class="glyphicon glyphicon-inbox"></i></a></li>
+          <li><a href="#/today" title="Today tasks"><i class="glyphicon glyphicon-star"></i></a></li>
+          <li><a href="#/next" title="Next tasks"><i class="glyphicon glyphicon-tasks"></i></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Projects">
+              <i class="glyphicon glyphicon-book"></i>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="project in projects">
+                <a href="#/project/{{project.name}}">
+                  <span class="badge pull-right" ng-show="project.taskNr">
+                    {{project.taskNr}}
+                  </span>
+                  {{project.name}}
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Contexts">
+              <i class="glyphicon glyphicon-tags"></i>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="context in contexts">
+                <a href="#/context/{{context.name}}">
+                  <span class="badge pull-right" ng-show="context.taskNr">
+                    {{context.taskNr}}
+                  </span>
+                  {{context.name}}
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li><a href="#/completed" title="Done tasks"><i class="glyphicon glyphicon-ok"></i></a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Settings">
+              <i class="glyphicon glyphicon-cog"></i>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#/settings">Settings</a></li>
+              <li class="divider"></li>
+              <li>
+                <a href="#" ng-click="toggleDevTools($event)">
+                  Dev tools
+                  <i class="glyphicon glyphicon-ok pull-right" ng-show="devTools"></i>
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li><a href="#/about">About</a></li>
+              <li><a href="#/exit">Exit</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="navbar-form pull-right" ng-submit="goSearch()">
+          <input type="text" id="searchField" class="form-control" placeholder="Search" ng-model="search">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="main">
+
+    <div id="sidebar" class="container" ng-class="{'col-lg-3':settings.sidebarEnabled}"
+         ng-show="settings.sidebarEnabled">
+      <ul class="nav nav-pills nav-stacked">
+        <li>
+          <a href="#/new" title="Create a new task">
+            <i class="glyphicon glyphicon-plus"></i>
+            Create
+          </a>
+        </li>
+        <li ng-droppable="inbox">
+          <a href="#/inbox" title="Inbox : tasks not completed, having no project and no due date">
+            <i class="glyphicon glyphicon-inbox"></i>
+            Inbox
+            <span class="badge pull-right" ng-show="inboxNr">{{inboxNr}}</span>
+          </a>
+        </li>
+        <li ng-droppable="today">
+          <a href="#/today" title="Today : tasks with a due date set to now or before">
+            <i class="glyphicon glyphicon-star"></i>
+            Today
+            <span class="badge pull-right" ng-show="todayNr">{{todayNr}}</span>
+          </a>
+        </li>
+        <li ng-droppable="next">
+          <a href="#/next" title="Next : tasks with a due date set to the futur">
+            <i class="glyphicon glyphicon-tasks"></i>
+            Next
+            <span class="badge pull-right" ng-show="nextNr">{{nextNr}}</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="nav nav-pills nav-stacked">
+        <h5 title="Projects">
+          <i class="glyphicon glyphicon-book"></i>
+          Projects
+        </h5>
+        <li ng-repeat="project in projects" ng-droppable="project {{project.name}}">
+          <a href="#/project/{{project.name}}" title="Tasks of the project {{project.name}}">
+            {{project.name}}
+            <span class="badge pull-right" ng-show="project.taskNr">{{project.taskNr}}</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="nav nav-pills nav-stacked">
+        <h5 title="Contexts">
+          <i class="glyphicon glyphicon-tags"></i>
+          Contexts
+        </h5>
+        <li ng-repeat="context in contexts" ng-droppable="context {{context.name}}">
+          <a href="#/context/{{context.name}}" title="Tasks of the context {{context.name}}">
+            {{context.name}}
+            <span class="badge pull-right" ng-show="context.taskNr">{{context.taskNr}}</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="nav nav-pills nav-stacked">
+        <li ng-droppable="completed">
+          <a href="#/completed" title="Completed tasks">
+            <i class="glyphicon glyphicon-ok"></i>
+            Done
+            <span class="badge pull-right" ng-show="completedNr">{{completedNr}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div id="bodyContainer" class="container" ng-class="{'col-lg-9':settings.sidebarEnabled}">
+      <div id="alertMessageContainer" class="container">
+        <div class="alert" model="alertMessage">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <span id="alertMessage"></span>
+        </div>
+      </div>
+      <div id="cancelConfirmContainer" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Are you sure you want to cancel ?</h4>
+            </div>
+            <div class="modal-body">
+              <p>Click 'No' if you don't want to lose data modifications &hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary" ng-click="cancelYes()">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="body" class="container" ng-view>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div id="footer" class="navbar-fixed-bottom">
+  <p class="pull-left text-muted credit">GTDone.js</p>
+
+  <p class="pull-right text-muted credit">© 2013 <a href="mailto:openhoat@gmail.com">Olivier Penhoat</a></p>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

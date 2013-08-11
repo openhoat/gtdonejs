@@ -1,0 +1,80 @@
+<div id="taskListContainer" ng-controller="TaskListCtrl" ng-init="init()">
+  <h3>{{listTitle}}</h3>
+  <h4 ng-hide="tasks">
+    {{noItemMessage}}
+  </h4>
+  <table class="table table-striped table-hover taskList" ng-show="tasks">
+    <thead>
+    <tr>
+      <th class="dragIndicator"></th>
+      <th class="priority" title="Priority">
+        <a href="#" ng-click="sort($event, 'priority')"
+           ng-class="{asc:isSortAsc('priority'),desc:isSortDesc('priority')}">P</a>
+      </th>
+      <th class="creationDate">
+        <a href="#" ng-click="sort($event, 'date')"
+           ng-class="{asc:isSortAsc('date'),desc:isSortDesc('date')}">Created</a>
+      </th>
+      <th class="taskCheckbox"></th>
+      <th class="description">
+        <a href="#" ng-click="sort($event, 'description')"
+           ng-class="{asc:isSortAsc('description'),desc:isSortDesc('description')}">Description</a>
+      </th>
+      <th class="dueDate">
+        <a href="#" ng-click="sort($event, 'dueDate')"
+           ng-class="{asc:isSortAsc('dueDate'),desc:isSortDesc('dueDate')}">Due</a>
+      </th>
+      <th class="completionDate">
+        <a href="#" ng-click="sort($event, 'completionDate')"
+           ng-class="{asc:isSortAsc('completionDate'),desc:isSortDesc('completionDate')}">Completed</a>
+      </th>
+      <th class="projects" ng-show="showProjects">Projects</th>
+      <th class="contexts" ng-show="showContexts">Contexts</th>
+      <th class="actions"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="task in tasks" class="taskRow" ng-draggable="{{task.id}}">
+      <td class="dragIndicator" title="Move the task to organize it">
+        <span class="glyphicon glyphicon-move"></span>
+      </td>
+      <td class="priority {{task.priority}}">
+        {{task.priority}}
+      </td>
+      <td class="creationDate" draggable="false">
+        {{moment(task.date).format(settings.dateFormat)}}
+      </td>
+      <td class="taskCheckbox">
+        <input type="checkbox" title="Click to change complete" ng-model="task.completed"
+               ng-click="toggleComplete(task)">
+      </td>
+      <td class="description">{{task.description}}</td>
+      <td class="dueDate">
+        <span ng-show="task.dueDate">
+          {{moment(task.dueDate).format(settings.dateFormat)}}
+        </span>
+      </td>
+      <td class="completionDate">
+        <span ng-show="task.completionDate">
+          {{moment(task.completionDate).format(settings.dateFormat)}}
+        </span>
+      </td>
+      <td class="projects" ng-show="showProjects">
+        <a href="#/project/{{project}}" class="context btn btn-default btn-mini" ng-repeat="project in task.projects">
+          +{{project}}
+        </a>
+      </td>
+      <td class="contexts" ng-show="showContexts">
+        <a href="#/context/{{context}}" class="context btn btn-default btn-mini" ng-repeat="context in task.contexts">
+          @{{context}}
+        </a>
+      </td>
+      <td class="actions">
+        <a href="#/edit/{{task.id}}">
+          <i class="glyphicon glyphicon-pencil"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

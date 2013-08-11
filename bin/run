@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. $(dirname $0)/.env
+
+${this_script_name}/less && \
+${node_webkit_dir}/nw --disable-gpu ${project_dir}

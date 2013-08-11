@@ -1,0 +1,22 @@
+{
+  "name": "gtdonejs",
+  "version": "0.0.1",
+  "main": "index.html#/about",
+  "window": {
+    "show": true,
+    "toolbar": false,
+    "width": 1020,
+    "height": 650
+  },
+  "dependencies": {
+    "moment": "2.0.0"
+  },
+  "devDependencies": {
+    "grunt": "0.4.1",
+    "grunt-contrib-clean": "0.5.0",
+    "grunt-contrib-less": "0.6.4",
+    "grunt-exec": "0.4.2",
+    "grunt-contrib-compress": "0.5.2",
+    "grunt-contrib-copy": "0.4.1"
+  }
+}

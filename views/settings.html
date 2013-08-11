@@ -1,0 +1,48 @@
+<div id="settings" ng-controller="SettingsCtrl" ng-init="init()">
+  <h3>Settings</h3>
+
+  <form ng-submit="save()">
+    <div class="form-group">
+      <label for="todoFile" class="control-label">Tasks file</label>
+
+      <div class="input-group">
+        <input type="text" class="form-control" id="todoFile" ng-model="settings.todoFile">
+        <span class="glyphicon glyphicon-hdd input-group-addon button enabled" ng-click="openTodoFileChooser()"></span>
+        <input type="file" id="todoFileChooser">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="todoFile" class="control-label">Archive file
+        <input type="checkbox" ng-model="settings.archiveEnabled">
+      </label>
+
+      <div class="input-group">
+        <input type="text" class="form-control" id="archiveFile"
+               ng-disabled="!settings.archiveEnabled" ng-model="settings.archiveFile">
+        <span class="glyphicon glyphicon-hdd input-group-addon button" ng-class="{enabled:settings.archiveEnabled}"
+              ng-disabled="!settings.archiveEnabled" ng-click="openArchiveFileChooser()"></span>
+        <input type="file" id="archiveFileChooser">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="dateFormat" class="control-label">Date format</label>
+
+      <div class="input-group">
+        <input type="text" class="form-control" id="dateFormat" ng-model="settings.dateFormat">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="startLocation" class="control-label">Start screen</label>
+
+      <div class="input-group">
+        <select id="startLocation" class="form-control" ng-model="settings.startLocation">
+          <option value="inbox">Inbox</option>
+          <option value="today">Today</option>
+          <option value="next">Next</option>
+          <option value="about">About</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>

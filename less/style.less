@@ -1,0 +1,169 @@
+body {
+  padding-top: 70px;
+}
+
+#settings {
+  .button.enabled {
+    cursor: pointer;
+  }
+}
+
+#alertMessageContainer {
+  height: 34px;
+  & > .alert {
+    display: none;
+  }
+}
+
+#alertMessage > strong {
+  text-transform: capitalize;
+}
+
+#navbar {
+  .dropdown-menu .badge {
+    margin-left: 10px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+#sidebar {
+  overflow-y: auto;
+  .glyphicon {
+    margin-right: 8px;
+  }
+}
+
+#main {
+  padding-bottom: 50px;
+}
+
+#bodyContainer {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#body {
+  margin-top: 10px;
+  padding-left: 20px;
+  & > div > h3 {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d9d9d9;
+  }
+}
+
+#newTask {
+  label:after {
+    content: ' :';
+  }
+}
+
+table.taskList {
+  & > thead > tr > th {
+    &, a {
+      color: #8e8e8e;
+      font-weight: normal;
+    }
+    a {
+      &:hover {
+        color: #333;
+      }
+      &, &:hover {
+        text-decoration: none;
+      }
+      &.asc:after {
+        content: '\25b2';
+      }
+      &.desc:after {
+        content: '\25bc';
+      }
+    }
+  }
+  & > tbody > tr {
+    cursor: default;
+    & > td {
+      &.dragIndicator {
+        padding-top: 10px;
+        cursor: pointer;
+        background-color: white;
+        border: none;
+        color: #ccc;
+        &:hover {
+          color: #4f4f4f;
+        }
+      }
+      a:not(.btn) {
+        &, &:hover {
+          color: black;
+          text-decoration: none;
+        }
+      }
+      &.contexts, &.projects {
+        a {
+          margin: 0 4px;
+        }
+      }
+      &.priority {
+        &.A {
+          border-left: solid 5px #c22600;
+        }
+        &.B {
+          border-left: solid 5px #007aff;
+        }
+        &.C {
+          border-left: solid 5px #6ae200;
+        }
+      }
+    }
+  }
+}
+
+section {
+  margin: 30px 0;
+}
+
+.droppable {
+  background-color: #eee;
+  a {
+    color: #333;
+  }
+  &.hovered {
+    background-color: #ccc;
+  }
+}
+
+#aboutContainer {
+  .poweredby {
+    list-style: none;
+    li {
+      display: inline;
+      margin: 0 10px;
+    }
+  }
+}
+
+#footer {
+  background-color: #dedede;
+  font-size: 0.9em;
+  p {
+    margin: 0;
+    padding: 6px 10px;
+  }
+  a {
+    color: #555;
+    text-decoration: none;
+  }
+}

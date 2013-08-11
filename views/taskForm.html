@@ -1,0 +1,68 @@
+<div id="newTask" ng-controller="EditTaskCtrl" ng-init="initTask()">
+  <h3>Edit task</h3>
+
+  <form class="form-horizontal" ng-submit="save()">
+    <div class="form-group">
+      <label for="description" class="col-lg-2 control-label">Description</label>
+
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="description" placeholder="Remember the milk"
+               ng-model="task.description">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="priority" class="col-lg-2 control-label">Priority</label>
+
+      <div class="col-lg-1">
+        <input id="priority" type="text" class="form-control" placeholder="A"
+               maxlength="1" pattern="[A-Z]{0,1}" title="Type one letter from A to Z" ng-model="task.priority">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="projects" class="col-lg-2 control-label">Projects</label>
+
+      <div class="col-lg-10">
+        <input type="text" list="existingProjects" class="form-control" id="projects" placeholder="Family Music"
+               title="Type one word for one project" ng-model="task.projectsLine">
+        <datalist id="existingProjects">
+          <option ng-repeat="project in projects" value="{{project.name}}">
+        </datalist>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="contexts" class="col-lg-2 control-label">Contexts</label>
+
+      <div class="col-lg-10">
+        <input type="text" list="existingContexts" class="form-control" id="contexts" placeholder="phone office"
+               title="Type one word for one context" ng-model="task.contextsLine">
+        <datalist id="existingContexts">
+          <option ng-repeat="context in contexts" value="{{context.name}}">
+        </datalist>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="dueDateStr" class="col-lg-2 control-label">Due date</label>
+
+      <div class="col-lg-3">
+        <input type="date" class="form-control" id="dueDateStr" placeholder="2014-09-07" title="Due date"
+               ng-model="task.dueDateStr">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="completed" class="col-lg-2 control-label">Completed</label>
+
+      <div class="col-lg-10">
+        <div class="checkbox">
+          <input type="checkbox" id="completed" title="Completed" ng-model="task.completed">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" ng-click="remove()">Remove</button>
+        <button type="button" class="btn btn-default pull-right" ng-click="cancel()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
