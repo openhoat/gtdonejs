@@ -49,4 +49,10 @@ Fix the issue with :
 
         $ sudo ln -fs /usr/lib64/libudev.so.1 /usr/lib64/libudev.so.0
 
+## Next step
+
+- Mac Osx packaging
+- Android app
+- iPhone app
+
 Enjoy !
