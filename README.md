@@ -24,24 +24,24 @@ GTDone.js is a ['Getting Things Done'](http://en.wikipedia.org/wiki/Getting_Thin
     4. Extract the node-webkit zip/tgz content to gtdonejs/lib/node-webkit/
 - Build :
 
-    $ cd gtdonejs
-    $ npm install
-    $ grunt
-    
+        $ cd gtdonejs
+        $ npm install
+        $ grunt
+
 - Run from the gtdonejs :
 
-    $ nw
+        $ nw
 
 - Run from elsewhere :
 
-    $ nw /path_to_gtdonejs/
+        $ nw /path_to_gtdonejs/
 
 ## Linux issue
 
 If you encounter an error like : "error while loading shared libraries: libudev.so.0: cannot open shared object file: No such file or directory"
 Fix the issue with :
 
-    $ sudo ln -fs /usr/lib64/libudev.so.1 /usr/lib64/libudev.so.0
+        $ sudo ln -fs /usr/lib64/libudev.so.1 /usr/lib64/libudev.so.0
 
 ## Mac Osx
 
