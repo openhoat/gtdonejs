@@ -22,9 +22,9 @@ GTDone.js is a ['Getting Things Done'](http://en.wikipedia.org/wiki/Getting_Thin
     1. Clone this project
     2. Install [node.js](http://nodejs.org/)
     3. Install [node-webkit](http://github.com/rogerwang/node-webkit)
-        - [Linux64](https://s3.amazonaws.com/node-webkit/v0.6.3/node-webkit-v0.6.3-linux-x64.tar.gz)
-        - [Windows](https://s3.amazonaws.com/node-webkit/v0.6.3/node-webkit-v0.6.3-win-ia32.zip)
-        - [Mac osx](https://s3.amazonaws.com/node-webkit/v0.6.3/node-webkit-v0.6.3-osx-ia32.zip)
+        - Direct link to binary files for [Linux64](https://s3.amazonaws.com/node-webkit/v0.6.3/node-webkit-v0.6.3-linux-x64.tar.gz)
+        - Direct link to binary files for [Windows](https://s3.amazonaws.com/node-webkit/v0.6.3/node-webkit-v0.6.3-win-ia32.zip)
+        - Direct link to binary files for [Mac osx](https://s3.amazonaws.com/node-webkit/v0.6.3/node-webkit-v0.6.3-osx-ia32.zip)
     4. Extract the node-webkit zip/tgz content to gtdonejs/lib/node-webkit/
 - Build :
 
