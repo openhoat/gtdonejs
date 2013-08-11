@@ -2,6 +2,8 @@
 
 GTDone.js is a ['Getting Things Done'](http://en.wikipedia.org/wiki/Getting_Things_Done) multi-platform desktop app based on [todotxt](http://todotxt.com/) format and powered by [nodejs](http://nodejs.org/) and [node-webkit](https://github.com/rogerwang/node-webkit).
 
+![GTDoneJS screenshot](/etc/screenshot.png "GTDoneJS")
+
 ## Run the built binary
 
 - Windows :

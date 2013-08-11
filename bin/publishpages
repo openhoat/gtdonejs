@@ -3,7 +3,7 @@
 . $(dirname $0)/.env
 
 s3_bucket="gtdonejs"
-files=$(ls ${project_dir}/s3/*.html)
+files=$(ls ${project_dir}/etc/s3/*.html)
 
 for file in ${files}; do
     filename=$(basename ${file})
