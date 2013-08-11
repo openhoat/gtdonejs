@@ -4,13 +4,17 @@ GTDone.js is a ['Getting Things Done'](http://en.wikipedia.org/wiki/Getting_Thin
 
 ## Run the built binary
 
-- Download the dist zip matching your platform :
-    - [windows](http://gtdonejs.s3.amazonaws.com/gtdonejs-win.0.0.1.zip)
-    - [linux](http://gtdonejs.s3.amazonaws.com/gtdonejs-linux.0.0.1.zip)
-- Unzip anywhere
-- Double click on the file depending on your platform :
-    - Linux : gtdonejs
-    - Windows : gtdonejs.exe
+- Windows :
+    - Download the [windows binary](http://gtdonejs.s3.amazonaws.com/gtdonejs-win.0.0.1.zip)
+    - Unzip gtdonejs-win.0.0.1.zip anywhere
+    - Double click on gtdonejs.exe
+
+- Linux :
+    - Download the [linux binary](http://gtdonejs.s3.amazonaws.com/gtdonejs-linux.0.0.1.zip)
+    - Unzip gtdonejs-linux.0.0.1.zip anywhere
+    - Double click on gtdonejs
+
+- Mac Osx : TODO
 
 ## Build the binary yourself
 
@@ -42,10 +46,5 @@ If you encounter an error like : "error while loading shared libraries: libudev.
 Fix the issue with :
 
         $ sudo ln -fs /usr/lib64/libudev.so.1 /usr/lib64/libudev.so.0
-
-## Mac Osx
-
-TODO
-
 
 Enjoy !
