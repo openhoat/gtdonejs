@@ -51,6 +51,7 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
     );
     $rootScope.enableWatchers();
     $rootScope.loadData();
+    $rootScope.$apply();
     alertService.showAlertMessage($, 'success', 'Task successfully saved.');
     $rootScope.goBack();
   };
@@ -64,6 +65,7 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
     );
     $rootScope.enableWatchers();
     $rootScope.loadData();
+    $rootScope.$apply();
     alertService.showAlertMessage($, 'success', 'Task successfully removed.');
     $rootScope.goBack();
   };
