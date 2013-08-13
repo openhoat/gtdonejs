@@ -17,6 +17,8 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
         $scope.showProjects = false;
         $scope.showContexts = true;
         $scope.showCompleted = false;
+        $scope.sortField = 'date';
+        $scope.sortOrder = 1;
         $scope.noItemMessage = 'No item, all tasks are planned ?';
         break;
       case 'today':
@@ -37,6 +39,8 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
         $scope.showProjects = true;
         $scope.showContexts = true;
         $scope.showCompleted = false;
+        $scope.sortField = 'dueDate';
+        $scope.sortOrder = 0;
         $scope.noItemMessage = 'Nothing to do in the future, maybe you should organize your inbox ;-)';
         break;
       case 'project':
@@ -47,6 +51,8 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
         $scope.showProjects = false;
         $scope.showContexts = true;
         $scope.showCompleted = false;
+        $scope.sortField = 'priority';
+        $scope.sortOrder = 1;
         $scope.noItemMessage = 'Nothing to do for this project :-)';
         break;
       case 'context':
@@ -57,6 +63,8 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
         $scope.showProjects = true;
         $scope.showContexts = false;
         $scope.showCompleted = false;
+        $scope.sortField = 'priority';
+        $scope.sortOrder = 1;
         $scope.noItemMessage = 'Nothing to do for this context :-)';
         break;
       case 'completed':
@@ -67,20 +75,27 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
         $scope.showProjects = true;
         $scope.showContexts = true;
         $scope.showCompleted = true;
+        $scope.sortField = 'completionDate';
+        $scope.sortOrder = 1;
         $scope.noItemMessage = 'Nothing has been done, maybe you should do something ;-)';
         break;
       case 'search':
         $scope.populateFunc = gtdService.getTasks;
-        $scope.populateFuncParams = $routeParams.q;
-        $scope.listTitle = "Tasks matching '" + $routeParams.q + "'";
+        $scope.populateFuncParams = decodeURIComponent($routeParams.q);
+        $scope.listTitle = "Tasks matching '" + $scope.populateFuncParams + "'";
         $scope.showDueDate = true;
         $scope.showProjects = true;
         $scope.showContexts = true;
         $scope.showCompleted = true;
+        $scope.sortField = 'date';
+        $scope.sortOrder = 1;
         $scope.noItemMessage = 'Nothing found, maybe you should try another search ;-)';
         break;
     }
     $scope.loadTasks();
+    if ($scope.sortField) {
+      $scope.sort(null, $scope.sortField);
+    }
     $rootScope.title = util.format('(%s) %s - %s', $scope.tasks.length, $scope.listTitle, $rootScope.appTitle);
   };
 
@@ -112,7 +127,9 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
   };
 
   $scope.sort = function ($event, field) {
-    $event.preventDefault();
+    if ($event) {
+      $event.preventDefault();
+    }
     if (field !== $scope.sortField) {
       $scope.sortOrder = 0;
     }
@@ -176,7 +193,7 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
       if (word.match(urlPattern)) {
         result.push('<a href="' + word + '" target="_blank">' + word + '</a>');
       } else if (word.match(tagPattern)) {
-        result.push('<a href="#/search/%23' + word.substring(1) + '">' + word + '</a>');
+        result.push('<a href="#/search/' + encodeURIComponent('#' + word.substring(1)) + '">' + word + '</a>');
       } else {
         result.push(word);
       }

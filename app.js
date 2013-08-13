@@ -33,8 +33,8 @@ app = {
       .when('/settings', { templateUrl: 'views/settings.html' })
       .when('/about', { templateUrl: 'views/about.html' })
       .when('/exit', { templateUrl: 'views/exit.html' })
-      .when('/', { templateUrl: 'views/welcome.html' })
-      .otherwise({ templateUrl: 'views/welcome.html' });
+      .when('/', { redirectTo: 'inbox' })
+      .otherwise({ redirectTo: 'inbox' });
   }
 };
 
@@ -257,7 +257,7 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
     $location.path($rootScope.prevLocationPath);
   };
   $rootScope.goSearch = function () {
-    $location.path('/search/' + ($rootScope.search || ''));
+    $location.path('/search/' + encodeURIComponent($rootScope.search || ''));
     $rootScope.search = null;
   };
   $rootScope.exit = function () {
