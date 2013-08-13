@@ -3,7 +3,7 @@ var config;
 config = {
   appTitle: 'GTDoneJS',
   log: true,
-  showDevTools: true
+  showDevTools: false
 };
 
 module.exports = config;
