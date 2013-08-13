@@ -5,6 +5,11 @@ var util = require('util')
 module.exports = function ($scope, $rootScope, $location, $, $routeParams, moment) {
 
   $scope.task = {};
+  $scope.dueFreqItems = [
+    { id: 'weekly', name: 'Weekly' },
+    { id: 'monthly', name: 'Monthly' },
+    { id: 'yearly', name: 'Yearly' }
+  ];
 
   $scope.initTask = function () {
     var task;
@@ -12,6 +17,7 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
     task = gtdService.getTasks()[$scope.taskId];
     $scope.task.description = task.description;
     $scope.task.priority = task.priority;
+    $scope.task.dueFreq = task.dueFreq;
     if (task.projects && task.projects.length) {
       $scope.task.projectsLine = task.projects.join(' ');
     }
@@ -32,7 +38,8 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
       date: new Date(),
       description: $scope.task.description,
       priority: $scope.task.priority,
-      completed: $scope.task.completed
+      completed: $scope.task.completed,
+      dueFreq: $scope.task.dueFreq
     };
     if ($scope.task.dueDateStr) {
       task.dueDate = gtdService.parseDate($scope.task.dueDateStr, 'YYYY-MM-DD');

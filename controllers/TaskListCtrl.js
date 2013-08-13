@@ -8,59 +8,75 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
     var loc;
     loc = $location.path().split('/')[1];
     switch (loc) {
+      case 'inbox':
+        $scope.populateFunc = gtdService.getInboxTasks;
+        $scope.populateFuncParams = null;
+        $scope.listTitle = 'Inbox tasks';
+        $scope.showDueDate = false;
+        $scope.showProjects = false;
+        $scope.showContexts = true;
+        $scope.showCompleted = false;
+        $scope.noItemMessage = 'No item, all tasks are planned ?';
+        break;
+      case 'today':
+        $scope.populateFunc = gtdService.getTodayTasks;
+        $scope.listTitle = "Today tasks";
+        $scope.showDueDate = true;
+        $scope.showProjects = true;
+        $scope.showContexts = true;
+        $scope.showCompleted = false;
+        $scope.sortField = 'priority';
+        $scope.sortOrder = 1;
+        $scope.noItemMessage = 'Congratulations ! You have nothing to do today :-)';
+        break;
+      case 'next':
+        $scope.populateFunc = gtdService.getNextTasks;
+        $scope.listTitle = "Next tasks";
+        $scope.showDueDate = true;
+        $scope.showProjects = true;
+        $scope.showContexts = true;
+        $scope.showCompleted = false;
+        $scope.noItemMessage = 'Nothing to do in the future, maybe you should organize your inbox ;-)';
+        break;
       case 'project':
         $scope.populateFunc = gtdService.getProjectTasks;
         $scope.populateFuncParams = $routeParams.name;
-        $scope.listTitle = "Project '" + $routeParams.name + "'";
+        $scope.listTitle = "Tasks for project '" + $routeParams.name + "'";
+        $scope.showDueDate = true;
         $scope.showProjects = false;
         $scope.showContexts = true;
+        $scope.showCompleted = false;
         $scope.noItemMessage = 'Nothing to do for this project :-)';
         break;
       case 'context':
         $scope.populateFunc = gtdService.getContextTasks;
         $scope.populateFuncParams = $routeParams.name;
-        $scope.listTitle = "Context '" + $routeParams.name + "'";
+        $scope.listTitle = "Tasks for context '" + $routeParams.name + "'";
+        $scope.showDueDate = true;
         $scope.showProjects = true;
         $scope.showContexts = false;
+        $scope.showCompleted = false;
         $scope.noItemMessage = 'Nothing to do for this context :-)';
         break;
       case 'completed':
         $scope.populateFunc = gtdService.getCompletedTasks;
         $scope.populateFuncParams = null;
-        $scope.listTitle = 'Completed';
+        $scope.listTitle = 'Completed tasks';
+        $scope.showDueDate = true;
         $scope.showProjects = true;
         $scope.showContexts = true;
+        $scope.showCompleted = true;
         $scope.noItemMessage = 'Nothing has been done, maybe you should do something ;-)';
         break;
       case 'search':
         $scope.populateFunc = gtdService.getTasks;
         $scope.populateFuncParams = $routeParams.q;
-        $scope.listTitle = "Search result for '" + $routeParams.q + "'";
+        $scope.listTitle = "Tasks matching '" + $routeParams.q + "'";
+        $scope.showDueDate = true;
         $scope.showProjects = true;
         $scope.showContexts = true;
+        $scope.showCompleted = true;
         $scope.noItemMessage = 'Nothing found, maybe you should try another search ;-)';
-        break;
-      case 'today':
-        $scope.populateFunc = gtdService.getTodayTasks;
-        $scope.listTitle = "Today";
-        $scope.showProjects = true;
-        $scope.showContexts = true;
-        $scope.noItemMessage = 'Congratulations ! You have nothing to do today :-)';
-        break;
-      case 'next':
-        $scope.populateFunc = gtdService.getNextTasks;
-        $scope.listTitle = "Next";
-        $scope.showProjects = true;
-        $scope.showContexts = true;
-        $scope.noItemMessage = 'Nothing to do in the future, maybe you should organize your inbox ;-)';
-        break;
-      case 'inbox':
-        $scope.populateFunc = gtdService.getInboxTasks;
-        $scope.populateFuncParams = null;
-        $scope.listTitle = 'Inbox';
-        $scope.showProjects = false;
-        $scope.showContexts = true;
-        $scope.noItemMessage = 'No item, all tasks are planned ?';
         break;
     }
     $scope.loadTasks();
@@ -132,6 +148,24 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
     $rootScope.loadData();
     alertService.showAlertMessage($, 'success', 'Task successfully saved.');
     $route.reload();
+  };
+
+  $scope.enrichText = function (text) {
+    var words, urlPattern, tagPattern,result;
+    result = [];
+    urlPattern = new RegExp('^http|https|ftp|ssh|mailto$');
+    tagPattern = new RegExp('^#.*$');
+    words = text.split(' ');
+    words.forEach(function (word) {
+      if (word.match(urlPattern)) {
+        result.push('<a href="' + word + '" target="_blank">' + word + '</a>');
+      } else if (word.match(tagPattern)) {
+        result.push('<a href="#/search/%23' + word.substring(1) + '">' + word + '</a>');
+      } else {
+        result.push(word);
+      }
+    });
+    return result.join(' ');
   };
 
 };

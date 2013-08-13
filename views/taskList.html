@@ -3,7 +3,7 @@
   <h4 ng-hide="tasks">
     {{noItemMessage}}
   </h4>
-  <table class="table table-striped table-hover taskList" ng-show="tasks">
+  <table class="table table-striped table-condensed table-hover taskList" ng-show="tasks">
     <thead>
     <tr>
       <th class="dragIndicator"></th>
@@ -20,11 +20,15 @@
         <a href="#" ng-click="sort($event, 'description')"
            ng-class="{asc:isSortAsc('description'),desc:isSortDesc('description')}">Description</a>
       </th>
-      <th class="dueDate">
+      <th class="dueDate" ng-show="showDueDate">
         <a href="#" ng-click="sort($event, 'dueDate')"
            ng-class="{asc:isSortAsc('dueDate'),desc:isSortDesc('dueDate')}">Due</a>
       </th>
-      <th class="completionDate">
+      <th class="dueFreq" ng-show="showDueDate">
+        <a href="#" ng-click="sort($event, 'dueFreq')"
+           ng-class="{asc:isSortAsc('dueFreq'),desc:isSortDesc('dueFreq')}">Frequency</a>
+      </th>
+      <th class="completionDate" ng-show="showCompleted">
         <a href="#" ng-click="sort($event, 'completionDate')"
            ng-class="{asc:isSortAsc('completionDate'),desc:isSortDesc('completionDate')}">Completed</a>
       </th>
@@ -48,13 +52,18 @@
         <input type="checkbox" title="Click to change complete" ng-model="task.completed"
                ng-click="toggleComplete(task)">
       </td>
-      <td class="description">{{task.description}}</td>
-      <td class="dueDate">
+      <td class="description" ng-bind-html-unsafe="enrichText(task.description)"></td>
+      <td class="dueDate" ng-show="showDueDate">
         <span ng-show="task.dueDate">
           {{moment(task.dueDate).format(settings.dateFormat)}}
         </span>
       </td>
-      <td class="completionDate">
+      <td class="dueFreq" ng-show="showDueDate">
+        <span ng-show="task.dueFreq">
+          {{task.dueFreq}}
+        </span>
+      </td>
+      <td class="completionDate" ng-show="showCompleted">
         <span ng-show="task.completionDate">
           {{moment(task.completionDate).format(settings.dateFormat)}}
         </span>

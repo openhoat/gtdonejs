@@ -38,7 +38,7 @@ app = {
   }
 };
 
-module = angular.module(app.name, []);
+module = angular.module(app.name, ['ngSanitize']);
 
 module.config(['$routeProvider', app.router]);
 
@@ -288,6 +288,10 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
   gtdService.loadSettings($rootScope.settings);
 
   gtdService.loadFileData(
+    $rootScope.settings.todoFile,
+    $rootScope.settings.archiveEnabled ? $rootScope.settings.archiveFile : null
+  );
+  gtdService.saveFileData(
     $rootScope.settings.todoFile,
     $rootScope.settings.archiveEnabled ? $rootScope.settings.archiveFile : null
   );
