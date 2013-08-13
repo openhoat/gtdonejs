@@ -50,6 +50,7 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
     if ($scope.task.contextsLine) {
       task.contexts = $scope.task.contextsLine.split(' ');
     }
+    task.completionDate = task.completed ? gtdService.formatDate(new Date()) : null;
     gtdService.updateTask(task);
     $rootScope.disableWatchers();
     gtdService.saveFileData(
