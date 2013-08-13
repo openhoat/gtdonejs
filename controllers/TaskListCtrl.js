@@ -147,6 +147,12 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
           } else {
             result = -1;
           }
+        } else if (b[field] === undefined || b[field] === null) {
+          if (a[field] === undefined || a[field] === null) {
+            result = 0;
+          } else {
+            result = 1;
+          }
         } else if (a[field] instanceof Date) {
           date = moment(a[field]);
           if (date.isAfter(b[field])) {

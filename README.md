@@ -18,6 +18,15 @@ GTDone.js is a ['Getting Things Done'](http://en.wikipedia.org/wiki/Getting_Thin
 
 - Mac Osx : TODO
 
+## Features
+
+- Tasks are associated with projects (+projectName), contexts (@contextName), and tags (#tagName)
+- Task due date : A due date less or equal than now appears in 'Today', else in 'Next'
+- Frequency with due date : for recurrent tasks, the due date will be updated each time the app starts
+- Drag and drop : Drag a task to the left panel, drop it to inbox, today, next, a project or a context
+- Settings : by default the app takes the todo.txt file at your home folder, in the settings it is possible to set a file for the current tasks (todo.txt), and another for completed tasks (done.txt)
+- Sync : there is no sync or cloud approach in the app, it is just based on local files, so you just have to use any solution like Dropbox to synchronize your tasks
+
 ## Build the binary yourself
 
 - Prerequisite :
