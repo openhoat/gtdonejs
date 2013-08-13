@@ -1,4 +1,9 @@
 <div id="taskListContainer" ng-controller="TaskListCtrl" ng-init="init()">
+  <div id="tagsContainer" ng-show="tags">
+    <ul>
+      <li ng-repeat="tag in tags"><a href="#/search/%23{{tag}}" class="btn btn-warning btn-mini">{{tag}}</a></li>
+    </ul>
+  </div>
   <h3>{{listTitle}}</h3>
   <h4 ng-hide="tasks">
     {{noItemMessage}}

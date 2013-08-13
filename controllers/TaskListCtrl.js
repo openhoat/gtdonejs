@@ -3,6 +3,7 @@ var util = require('util')
   , gtdService = require('../lib/gtd-service');
 
 module.exports = function ($, $scope, $rootScope, $route, $location, $routeParams, moment) {
+  $scope.tags = [];
 
   $scope.init = function (populateFunc, title) {
     var loc;
@@ -84,7 +85,22 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
   };
 
   $scope.loadTasks = function () {
+    var words, tagPattern, match;
     $scope.tasks = $scope.populateFunc($scope.populateFuncParams);
+    $scope.tags.length = 0;
+    tagPattern = new RegExp('^#(.*)$');
+    $scope.tasks.forEach(function (task) {
+      task.description.split(' ').forEach(function (word) {
+        var tag;
+        match = word.match(tagPattern);
+        if (match) {
+          tag = match[1];
+          if ($scope.tags.indexOf(tag) === -1) {
+            $scope.tags.push(tag);
+          }
+        }
+      });
+    });
   };
 
   $scope.isSortAsc = function (field) {
@@ -151,7 +167,7 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
   };
 
   $scope.enrichText = function (text) {
-    var words, urlPattern, tagPattern,result;
+    var words, urlPattern, tagPattern, result;
     result = [];
     urlPattern = new RegExp('^http|https|ftp|ssh|mailto$');
     tagPattern = new RegExp('^#.*$');
