@@ -58,7 +58,7 @@
         <input type="checkbox" title="Click to change complete" ng-model="task.completed"
                ng-click="toggleComplete(task)">
       </td>
-      <td class="description" ng-bind-html-unsafe="enrichText(task.description)"></td>
+      <td class="description" ng-bind-html-unsafe="enrichText(task.description, $last)"></td>
       <td class="dueDate" ng-show="showDueDate">
         <span ng-show="task.dueDate">
           {{moment(task.dueDate).format(settings.dateFormat)}}

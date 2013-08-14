@@ -2,8 +2,9 @@ var util = require('util')
   , alertService = require('../lib/alert-service')
   , gtdService = require('../lib/gtd-service');
 
-module.exports = function ($, $scope, $rootScope, $route, $location, $routeParams, moment) {
+module.exports = function ($, $scope, $rootScope, $route, $location, $routeParams, moment, $timeout) {
   $scope.tags = [];
+  $scope.refreshExtLinks = false;
 
   $scope.init = function (populateFunc, title) {
     var loc;
@@ -98,6 +99,11 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
       $scope.sort(null, $scope.sortField);
     }
     $rootScope.title = util.format('(%s) %s - %s', $scope.tasks.length, $scope.listTitle, $rootScope.appTitle);
+    $scope.$watch('refreshExtLinks', function (newVal, oldVal) {
+      if (!oldVal && newVal) {
+        $rootScope.handleExtLinks();
+      }
+    });
   };
 
   $scope.loadTasks = function () {
@@ -190,8 +196,8 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
     $route.reload();
   };
 
-  $scope.enrichText = function (text) {
-    var words, urlPattern, tagPattern, result;
+  $scope.enrichText = function (text, last) {
+    var words, urlPattern, tagPattern, result, content, compiledContent;
     result = [];
     urlPattern = new RegExp('^http|https|ftp|ssh|mailto$');
     tagPattern = new RegExp('^#.*$');
@@ -205,6 +211,9 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
         result.push(word);
       }
     });
+    if (last) {
+      $scope.refreshExtLinks = true;
+    }
     return result.join(' ');
   };
 

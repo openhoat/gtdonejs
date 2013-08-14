@@ -150,7 +150,7 @@ module.directive('ngDroppable', function ($rootScope) {
 
 module.run(function ($rootScope, $location, $route, $exceptionHandler) {
 
-  var userHome, keypressHandler;
+  var userHome, extLinksHandler, keypressHandler;
 
   userHome = gtdService.getUserHome();
 
@@ -164,6 +164,11 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
   };
   $rootScope.devTools = config.showDevTools;
   $rootScope.moment = moment;
+
+  extLinksHandler = function () {
+    gui.Shell.openExternal(this.href);
+    return false;
+  };
 
   keypressHandler = function (event) {
     if ($(event.currentTarget.activeElement).is('input')) {
@@ -202,6 +207,9 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
     return true;
   };
 
+  $rootScope.$on('$viewContentLoaded', function () {
+    $rootScope.handleExtLinks();
+  });
   $rootScope.$on('$locationChangeSuccess', function (evt, newUrl, prevUrl) {
     var prevLocation;
     prevLocation = prevUrl.match(/^.*#(\/.*)$/);
@@ -326,6 +334,12 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
   };
   $rootScope.disableKeyboardShortcuts = function () {
     $(document).unbind('keypress', keypressHandler);
+  };
+  $rootScope.handleExtLinks = function () {
+    var extLinks;
+    extLinks = $('a[target=_blank]');
+    extLinks.unbind('click', extLinksHandler);
+    extLinks.bind('click', extLinksHandler);
   };
 
   gtdService.loadSettings($rootScope.settings);
