@@ -93,6 +93,7 @@ gruntConfig = function (grunt) {
             src: [
               'controllers/**',
               'css/**',
+              'img/**',
               'lib/*.js',
               'lib/angular-1.0.7/**',
               'lib/bootstrap-3.0.0-rc1/**',

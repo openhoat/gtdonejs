@@ -14,6 +14,7 @@ module.exports = function ($scope, $rootScope, $location, $) {
   };
 
   $scope.init = function () {
+    $rootScope.disableKeyboardShortcuts();
     $rootScope.title = util.format('Settings - %s', $rootScope.appTitle);
     $('#todoFileChooser').hide();
     $('#archiveFileChooser').hide();

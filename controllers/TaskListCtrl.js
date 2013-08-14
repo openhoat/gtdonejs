@@ -7,6 +7,7 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
 
   $scope.init = function (populateFunc, title) {
     var loc;
+    $rootScope.enableKeyboardShortcuts();
     loc = $location.path().split('/')[1];
     switch (loc) {
       case 'inbox':

@@ -13,6 +13,7 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
 
   $scope.initTask = function () {
     var task;
+    $rootScope.disableKeyboardShortcuts();
     $scope.taskId = parseInt($routeParams.taskId);
     task = gtdService.getTasks()[$scope.taskId];
     $scope.task.description = task.description;

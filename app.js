@@ -150,7 +150,7 @@ module.directive('ngDroppable', function ($rootScope) {
 
 module.run(function ($rootScope, $location, $route, $exceptionHandler) {
 
-  var userHome;
+  var userHome, keypressHandler;
 
   userHome = gtdService.getUserHome();
 
@@ -164,6 +164,43 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
   };
   $rootScope.devTools = config.showDevTools;
   $rootScope.moment = moment;
+
+  keypressHandler = function (event) {
+    if ($(event.currentTarget.activeElement).is('input')) {
+      return true;
+    }
+    switch (event.charCode) {
+      case 73:
+      case 105:
+        $rootScope.$apply(function () {
+          $location.path('/inbox');
+        });
+        return false;
+        break;
+      case 84:
+      case 116:
+        $rootScope.$apply(function () {
+          $location.path('/today');
+        });
+        return false;
+        break;
+      case 78:
+      case 110:
+        $rootScope.$apply(function () {
+          $location.path('/next');
+        });
+        return false;
+        break;
+      case 65:
+      case 97:
+        $rootScope.$apply(function () {
+          $location.path('/new');
+        });
+        return false;
+        break;
+    }
+    return true;
+  };
 
   $rootScope.$on('$locationChangeSuccess', function (evt, newUrl, prevUrl) {
     var prevLocation;
@@ -283,6 +320,12 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
         $rootScope.goBack();
       });
     })
+  };
+  $rootScope.enableKeyboardShortcuts = function () {
+    $(document).bind('keypress', keypressHandler);
+  };
+  $rootScope.disableKeyboardShortcuts = function () {
+    $(document).unbind('keypress', keypressHandler);
   };
 
   gtdService.loadSettings($rootScope.settings);

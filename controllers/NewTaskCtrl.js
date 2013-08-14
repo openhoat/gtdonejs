@@ -13,6 +13,7 @@ module.exports = function ($scope, $rootScope, $location, $) {
   ];
 
   $scope.initTask = function () {
+    $rootScope.disableKeyboardShortcuts();
     if ($rootScope.prevLocationPath.indexOf('/today') === 0) {
       $scope.task.dueDateStr = gtdService.formatDate(new Date(), 'YYYY-MM-DD');
     } else if ($rootScope.prevLocationPath.indexOf('/next') === 0) {
