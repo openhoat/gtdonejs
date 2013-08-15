@@ -2,7 +2,6 @@ var pkg = require('./package')
   , path = require('path')
   , gruntConfig;
 
-
 gruntConfig = function (grunt) {
   var nodeWebkitLinuxDir, nodeWebkitMacDir, nodeWebkitWinDir, distDir;
 
