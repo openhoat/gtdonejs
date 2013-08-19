@@ -51,9 +51,7 @@
       <td class="priority {{task.priority}}">
         {{task.priority}}
       </td>
-      <td class="creationDate" draggable="false">
-        {{moment(task.date).format(settings.dateFormat)}}
-      </td>
+      <td class="creationDate">{{moment(task.date).format(settings.dateFormat)}}</td>
       <td class="taskCheckbox">
         <input type="checkbox" title="Click to change complete" ng-model="task.completed"
                ng-click="toggleComplete(task)">
@@ -75,7 +73,7 @@
         </span>
       </td>
       <td class="projects" ng-show="showProjects">
-        <a href="#/project/{{project}}" class="context btn btn-default btn-mini" ng-repeat="project in task.projects">
+        <a href="#/project/{{project}}" class="project btn btn-default btn-mini" ng-repeat="project in task.projects">
           +{{project}}
         </a>
       </td>
