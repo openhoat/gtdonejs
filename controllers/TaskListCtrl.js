@@ -184,7 +184,7 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
   };
 
   $scope.toggleComplete = function (task) {
-    task.completionDate = task.completed ? gtdService.formatDate(new Date()) : null;
+    task.completionDate = task.completed ? new Date() : null;
     $rootScope.disableWatchers();
     gtdService.saveFileData(
       $rootScope.settings.todoFile,
