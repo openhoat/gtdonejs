@@ -7,12 +7,12 @@ GTDone.js is a ['Getting Things Done'](http://en.wikipedia.org/wiki/Getting_Thin
 ## Run the built binary
 
 - Windows :
-    - Download the [windows binary](http://gtdonejs.s3.amazonaws.com/gtdonejs-win.0.0.4.zip)
+    - Download the [windows binary](http://gtdonejs.s3.amazonaws.com/gtdonejs-win.0.0.5.zip)
     - Unzip gtdonejs-win.version.zip anywhere
     - Double click on gtdonejs.exe
 
 - Linux :
-    - Download the [linux binary](http://gtdonejs.s3.amazonaws.com/gtdonejs-linux.0.0.4.zip)
+    - Download the [linux binary](http://gtdonejs.s3.amazonaws.com/gtdonejs-linux.0.0.5.zip)
     - Unzip gtdonejs-linux.version.zip anywhere
     - Double click on gtdonejs
 
