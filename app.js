@@ -404,4 +404,3 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
   }
 
 });
-

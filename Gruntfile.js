@@ -83,7 +83,7 @@ gruntConfig = function (grunt) {
     compress: {
       app: {
         options: {
-          archive: path.join(distDir, 'gtdonejs.nw'),
+          archive: path.join(distDir, pkg.name + '.nw'),
           mode: 'zip'
         },
         files: [
@@ -159,29 +159,29 @@ gruntConfig = function (grunt) {
     },
     binconcat: {
       linux: {
-        src: [path.join(nodeWebkitLinuxDir, 'nw'), path.join(distDir, 'gtdonejs.nw')],
-        dest: path.join(distDir, 'linux', 'gtdonejs')
+        src: [path.join(nodeWebkitLinuxDir, 'nw'), path.join(distDir, pkg.name + '.nw')],
+        dest: path.join(distDir, 'linux', pkg.name)
       },
       mac: {
-        src: [path.join(nodeWebkitMacDir, 'nw'), path.join(distDir, 'gtdonejs.nw')],
-        dest: path.join(distDir, 'mac', 'gtdonejs')
+        src: [path.join(nodeWebkitMacDir, 'nw'), path.join(distDir, pkg.name + 'nw')],
+        dest: path.join(distDir, 'mac', pkg.name)
       },
       win: {
-        src: [path.join(nodeWebkitWinDir, 'nw.exe'), path.join(distDir, 'gtdonejs.nw')],
-        dest: path.join(distDir, 'win', 'gtdonejs.exe')
+        src: [path.join(nodeWebkitWinDir, 'nw.exe'), path.join(distDir, pkg.name + '.nw')],
+        dest: path.join(distDir, 'win', pkg.name + '.exe')
       }
     },
     chmod: {
       linux: {
-        file: path.join(distDir, 'linux', 'gtdonejs'),
+        file: path.join(distDir, 'linux', pkg.name),
         mode: '775'
       },
       mac: {
-        file: path.join(distDir, 'mac', 'gtdonejs'),
+        file: path.join(distDir, 'mac', pkg.name),
         mode: '775'
       },
       win: {
-        file: path.join(distDir, 'win', 'gtdonejs.exe'),
+        file: path.join(distDir, 'win', pkg.name + '.exe'),
         mode: '775'
       }
     },

@@ -148,17 +148,19 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
     } else {
       $scope.tasks.sort(function (a, b) {
         var result, date;
-        if (a[field] === undefined || a[field] === null) {
-          if (b[field] === undefined || b[field] === null) {
-            result = 0;
-          } else {
+        if (!a[field] && !b[field]) {
+          return false;
+        } else if (!a[field]) {
+          result = -1;
+        } else if (!b[field]) {
+          result = 1;
+        } else if (field === 'priority') {
+          if (a[field].toLowerCase() > b[field].toLowerCase()) {
             result = -1;
-          }
-        } else if (b[field] === undefined || b[field] === null) {
-          if (a[field] === undefined || a[field] === null) {
-            result = 0;
+          } else if (a[field].toLowerCase() < b[field].toLowerCase()) {
+            result = +1;
           } else {
-            result = 1;
+            result = 0;
           }
         } else if (a[field] instanceof Date) {
           date = moment(a[field]);
@@ -178,6 +180,32 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
             result = 0;
           }
         }
+        /*
+         if ((a[field] === undefined || a[field] === null) && (b[field] === undefined || b[field] === null)) {
+         result = 0;
+         } else if (a[field] === undefined || a[field] === null) {
+         result = 1;
+         } else if (b[field] === undefined || b[field] === null) {
+         result = -1;
+         } else if (a[field] instanceof Date) {
+         date = moment(a[field]);
+         if (date.isAfter(b[field])) {
+         result = 1;
+         } else if (date.isBefore(b[field])) {
+         result = -1;
+         } else {
+         result = 0;
+         }
+         } else {
+         if (a[field].toLowerCase() > b[field].toLowerCase()) {
+         result = 1;
+         } else if (a[field].toLowerCase() < b[field].toLowerCase()) {
+         result = -1;
+         } else {
+         result = 0;
+         }
+         }
+         */
         return result * $scope.sortOrder;
       });
     }
