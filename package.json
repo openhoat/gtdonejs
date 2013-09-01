@@ -3,7 +3,7 @@
   "version": "0.0.6",
   "main": "index.html#/about",
   "window": {
-    "show": true,
+    "show": false,
     "toolbar": false,
     "width": 1020,
     "height": 650,

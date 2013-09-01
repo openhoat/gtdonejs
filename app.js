@@ -386,8 +386,7 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
   }
   win.moveTo($rootScope.settings.winX, $rootScope.settings.winY);
   win.resizeTo($rootScope.settings.winWidth, $rootScope.settings.winHeight);
-
-  $('#searchField').focus(); // set focus to search field
+  win.show();
 
   function refreshHeight() {
     var height;
@@ -398,6 +397,10 @@ module.run(function ($rootScope, $location, $route, $exceptionHandler) {
 
   $(win.window).resize(refreshHeight);
   refreshHeight();
+
+  window.setTimeout(function () {
+    $('#searchField').focus(); // set focus to search field
+  }, 200);
 
   if ($rootScope.settings.startLocation) {
     $location.path('/' + $rootScope.settings.startLocation);
