@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=0.0.6
+Name=GTDoneJS
+Exec=/opt/gtdonejs/gtdonejs
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=/opt/gtdonejs/img/icon-50.png
+Categories=Network;WebBrowser;
