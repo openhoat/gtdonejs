@@ -2,7 +2,7 @@ var util = require('util')
   , alertService = require('../lib/alert-service')
   , gtdService = require('../lib/gtd-service');
 
-module.exports = function ($scope, $rootScope, $location, $, $routeParams, moment) {
+module.exports = function ($scope, $rootScope, $location, $, $routeParams, moment, $route) {
 
   $scope.task = {};
   $scope.dueFreqItems = [
@@ -64,9 +64,18 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
     alertService.showAlertMessage($, 'success', 'Task successfully saved.');
     $rootScope.goBack();
   };
-
-  $scope.remove = function () {
-    gtdService.removeTask($scope.taskId);
+  
+  $scope.undoRemoveCb = function(args) {
+    var task = {
+      date: args[0],
+      description: args[1],
+      priority: args[2],
+      dueFreq: args[3],
+      dueDate: args[4],
+      projects: args[5],
+      contexts: args[6]
+    };
+    gtdService.addTask(task);
     $rootScope.disableWatchers();
     gtdService.saveFileData(
       $rootScope.settings.todoFile,
@@ -74,9 +83,31 @@ module.exports = function ($scope, $rootScope, $location, $, $routeParams, momen
     );
     $rootScope.enableWatchers();
     $rootScope.loadData();
+    $route.reload();
     $rootScope.$apply();
-    alertService.showAlertMessage($, 'success', 'Task successfully removed.');
-    $rootScope.goBack();
+  }
+  $scope.remove= function () {
+    $('#removeConfirmContainer').modal({keyboard: true, show: true});
   };
-
+  $scope.removeYes = function () {
+    $('#removeConfirmContainer').modal('hide');
+    $('#removeConfirmContainer').on('hidden.bs.modal', function () {
+      $scope.$apply(function () {
+        var args, task;
+        task  = gtdService.getTaskById($scope.taskId);
+        args = [task.date, task.description, task.priority, task.dueFreq, task.dueDate, task.projects, task.contexts];
+        gtdService.removeTask($scope.taskId);
+        $rootScope.disableWatchers();
+        gtdService.saveFileData(
+          $rootScope.settings.todoFile,
+          $rootScope.settings.archiveEnabled ? $rootScope.settings.archiveFile : null
+        );
+        $rootScope.enableWatchers();
+        $rootScope.loadData();
+        $rootScope.$apply();
+        alertService.showAlertMessage($, 'success', 'Task successfully removed.', '', 15000, $scope.undoRemoveCb, args);
+        $scope.goBack();
+      });
+    });
+  };
 };

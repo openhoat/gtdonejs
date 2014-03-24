@@ -210,8 +210,15 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
       });
     }
   };
+  
+  $scope.undoCb = function(args) {
+      var task = args[0];
+      task.completed = !task.completed;
+      $scope.toggleComplete(task, true);
+      $rootScope.$apply();
+  };
 
-  $scope.toggleComplete = function (task) {
+  $scope.toggleComplete = function (task, doNotShowAlert) {
     task.completionDate = task.completed ? new Date() : null;
     $rootScope.disableWatchers();
     gtdService.saveFileData(
@@ -220,7 +227,9 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
     );
     $rootScope.enableWatchers();
     $rootScope.loadData();
-    alertService.showAlertMessage($, 'success', 'Task successfully saved.');
+    if (!doNotShowAlert) {
+      alertService.showAlertMessage($, 'success', 'Task successfully saved.', '', 15000, $scope.undoCb, [task]);
+    }
     $route.reload();
   };
 
@@ -244,5 +253,4 @@ module.exports = function ($, $scope, $rootScope, $route, $location, $routeParam
     }
     return result.join(' ');
   };
-
 };
