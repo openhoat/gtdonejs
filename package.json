@@ -10,7 +10,7 @@
     "icon": "img/icon-50.png"
   },
   "dependencies": {
-    "moment": "2.0.0"
+    "moment": "2.29.2"
   },
   "devDependencies": {
     "grunt": "0.4.1",
